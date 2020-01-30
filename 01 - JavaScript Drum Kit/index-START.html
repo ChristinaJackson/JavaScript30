@@ -59,6 +59,30 @@
 
 <script>
 
+function playSomething(e){
+  //all keus have a keycode
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if (!audio) return; //stops the function
+    audio.currentTime = 0; //rewind to the start of the file, so you can play fast
+    audio.play();
+    //adds the class playing to the current class list
+    key.classList.add('playing');
+};
+
+  function removeTransition(e){
+    //if it isnt transform, do nothing
+    if(e.propertyName !=='transform') return;
+    //removes the class from the element
+    this.classList.remove('playing')
+  }
+
+  const keys = document.querySelectorAll('.key');
+  //must loop through, the keys are a node list
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  window.addEventListener('keydown', playSomething);
+
 </script>
 
 
